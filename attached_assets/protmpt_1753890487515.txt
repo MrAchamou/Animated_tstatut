@@ -1,0 +1,109 @@
+
+📁 Dans mon projet GitHub, j’ai un dossier nommé `Premium_Effect/` qui contient **61 effets** sous forme de sous-dossiers.
+
+Chaque effet est structuré comme suit :
+```
+
+Premium\_Effect/<effect-name>/
+├── effect.js           ← le code de l’effet
+└── description.txt     ← description textuelle de l’effet
+
+```
+
+---
+
+🎯 Objectif :
+Pour chaque effet, générer un **nouveau fichier unique** nommé :
+
+```
+
+<effect-name>.effect.js
+
+```
+
+à placer dans ce dossier :
+```
+
+/src/data/effects/
+
+````
+
+Ce fichier doit contenir **toutes les informations suivantes**, bien organisées pour permettre une **classification intelligente** lors du développement.
+
+---
+
+✅ Format final de chaque `.effect.js` :
+
+```js
+// <effect-name>.effect.js
+export const <camelCaseEffectName> = {
+  id: "<effect-name>",               // nom du dossier
+  name: "<Nom lisible>",            // même que id mais avec espaces et capitales
+  description: "<contenu de description.txt>",
+  category: "text",                 // text | image | universal
+  subcategory: "style",             // animation | style | transform | filter
+  intensity: "medium",              // à définir par règle ou valeur par défaut
+  performance: "light",             // idem
+
+  compatibility: {
+    text: true,
+    image: false,
+    logo: false,
+    background: false
+  },
+
+  tags: ["tag1", "tag2", "tag3"],   // à générer à partir de mots-clés du texte si possible
+
+  parameters: {},                   // facultatif : vide si rien à extraire
+
+  preview: {
+    gif: "<effect-name>.gif",       // pas présent, mais mettre valeur par défaut
+    duration: 3000,
+    loop: true
+  },
+
+  engine: (element, params) => {
+    // contenu brut du fichier effect.js intégré ici
+  }
+};
+````
+
+---
+
+📌 Contraintes :
+
+* Le `id` est le nom du sous-dossier (ex: "glow-animated")
+* Le `name` est dérivé du `id` (ex: "Glow Animated")
+* `description.txt` devient le champ `description` (garde les sauts de ligne)
+* `effect.js` est injecté dans le champ `engine` (fonction anonyme ou nommée)
+* `category`, `compatibility`, etc., peuvent être des valeurs **par défaut** pour l’instant ou déduites de mots-clés dans `description.txt`
+* Le fichier final doit être **auto-suffisant** : tout y est pour charger dans une base locale JS
+
+---
+
+📂 Tous les fichiers `.effect.js` générés doivent être placés dans :
+
+```
+/src/data/effects/
+```
+
+---
+
+💡 Objectif final :
+Pouvoir charger tous les fichiers `.effect.js` via un `importAll` et construire un moteur de filtrage/classification sans IA externe. Exemple :
+
+```ts
+import * as effects from './src/data/effects/*.effect.js';
+```
+
+---
+
+⚙️ Bonus (facultatif) :
+Tu peux générer un script `convertEffects.ts` qui fait la conversion automatiquement à partir du dossier `Premium_Effect`.
+
+```
+
+---
+
+Souhaites-tu aussi un exemple **d’un fichier final `.effect.js` bien généré** à partir d’un vrai effet que tu me montres ? Je peux t’en faire un à la main pour servir de modèle visuel.
+```
